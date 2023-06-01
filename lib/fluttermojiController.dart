@@ -30,6 +30,12 @@ class FluttermojiController extends GetxController {
   /// the kind of eyes picked by the user
   Map<String?, dynamic> selectedOptions = <String?, dynamic>{};
 
+  FluttermojiController({Map<String?, dynamic>? initial}) {
+    if (initial != null) {
+      selectedOptions = initial;
+    }
+  }
+
   @override
   void onInit() {
     // called immediately after the widget is allocated memory
@@ -38,8 +44,10 @@ class FluttermojiController extends GetxController {
   }
 
   void init() async {
-    Map<String?, int> _tempIndexes = await getFluttermojiOptions();
-    selectedOptions = _tempIndexes;
+    if (selectedOptions.isEmpty) {
+      Map<String?, int> _tempIndexes = await getFluttermojiOptions();
+      selectedOptions = _tempIndexes;
+    }
     update();
     fluttermoji.value = getFluttermojiFromOptions();
     update();
